@@ -75,10 +75,11 @@ function valueToAddIsChildNode(nodeChildren, valueToAdd) {
 
 function addNode(node, value) {
 
+    // Si el valor a agregar ya fue agregado al arbol respetando el camino se vuelve de la recursion
     if (path.includes(value)) {
         return;
     }
-    // Si el nodo actual es una hoja se agrega el nuevo nodo
+
     if (node.value === '.') {
         if (!valueToAddIsChildNode(node.children, value) && isLevelToAdd()) {
             node.children.push({ value, children: [] });
@@ -94,29 +95,19 @@ function addNode(node, value) {
     else {
         // Si hay un camino a recorrer aparte del nodo root (el valor del nodo root esta siempre en la posicion 0 de "path")
         if (path.length > 1) {
-            // Si el nodo es parte del camino
-            if (isSearchedNode(node)) {
-                // Si estamos en el nivel donde se va agregar el nodo
-                if (isLevelToAdd()) {
-                    // Si el nodo actual no tiene como hijo un nodo con el valor a agregar, se agrega
-                    // En caso de que lo tenga se deja el nodo que esta
-                    if (!valueToAddIsChildNode(node.children, value)) {
-                        node.children.push({ value, children: [] });
-                    }
+            // Si el nodo es parte del camino y estamos en el nivel donde se va agregar el nodo
+            if (isSearchedNode(node) && isLevelToAdd()) {
+                // Si el nodo actual no tiene como hijo un nodo con el valor a agregar, se agrega
+                // En caso de que lo tenga se deja el nodo que esta
+                if (!valueToAddIsChildNode(node.children, value)) {
+                    node.children.push({ value, children: [] });
+                }
 
-                    /* Se agregue o no un nuevo nodo al arbol, se agrega el value al array
-                    que representa el camino recorrido (los nodos agregados del dominio) */
-                    path.push(value);
-                }
-                // Sino sigo recorriendo el arbol por el camino encontrado
-                else {
-                    for (let child of node.children) {
-                        level++;
-                        addNode(child, value);
-                        level--;
-                    }
-                }
+                /* Se agregue o no un nuevo nodo al arbol, se agrega el value al array
+                que representa el camino recorrido (los nodos agregados del dominio) */
+                path.push(value);
             }
+            // Sino sigo recorriendo el arbol por el camino encontrado
             else {
                 for (let child of node.children) {
                     level++;
