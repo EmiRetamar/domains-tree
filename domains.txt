@@ -2,6 +2,6 @@ www.unlp.edu.ar
 www.info.unlp.edu.ar
 www.uba.ar
 nic.ar
-www. motorola.com
+www.motorola.com
 pypi.org
 stackoverflow.com

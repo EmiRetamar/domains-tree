@@ -126,7 +126,7 @@ function addNode(node, value) {
             }
         }
         else {
-            if (node.value !== value) {
+            if (node.value !== value && isLevelToAdd()) {
                 node.children.push({ value, children: [] });
             }
 
